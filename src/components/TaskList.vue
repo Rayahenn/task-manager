@@ -2,7 +2,9 @@
     <div class="board">
         <div class="taskList" v-for="board in boards" :key="board.id">
             <h1>{{ board.name }}</h1>
-            <TaskItem :board_id="board.id"/>
+            <draggable :dragBoard="board" group="tasks">
+                <TaskItem :board_id="board.id"/>
+            </draggable>
             <div class="addItem">
                 <div class="add" @click="openNewItem(board.id)" :class="{ active: board.active}" v-if="!board.addingItem">+</div>
                 <div class="newItem" v-else>
@@ -18,9 +20,10 @@
 
 <script>
 import TaskItem from '@/components/TaskItem';
+import draggable from 'vuedraggable';
 export default {
     name: 'TaskList',
-    components: { TaskItem },
+    components: { TaskItem, draggable },
     data() {
         return {
             currentBoard: 0,

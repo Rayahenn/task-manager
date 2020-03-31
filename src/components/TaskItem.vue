@@ -28,18 +28,23 @@ export default {
                 },
                 {
                     id: 2,
-                    board_id: 0,
+                    board_id: 1,
                     name: "Testowy1"
                 },
                 {
                     id: 3,
-                    board_id: 1,
+                    board_id: 2,
                     name: "Testowy2"
                 },
                 {
                     id: 4,
-                    board_id: 2,
+                    board_id: 3,
                     name: "Testowy3"
+                },
+                {
+                    id: 4,
+                    board_id: 4,
+                    name: "Testowy4"
                 }
             ],
         }
