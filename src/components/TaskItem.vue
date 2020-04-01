@@ -4,9 +4,13 @@
         v-for="task in taskList" 
         :key="task.id" 
         :board_id="task.board_id"
+        :class="{ isFavourite: favourite}"
         v-if="task.board_id == board_id"
         >
           <h1>{{ task.name }}</h1>
+          <i class="fa fa-star-o" aria-hidden="true" 
+          @click="toggleFavourite"
+          ></i>
         </div>
     </div>
 </template>
@@ -20,6 +24,7 @@ export default {
     },
     data() {
         return{
+            favourite: false,
             taskList: [
                 {
                     id: 1,
@@ -48,7 +53,12 @@ export default {
                 }
             ],
         }
-    }
+    },
+    methods: {
+        toggleFavourite() {
+                this.favourite = !this.favourite
+        }
+    },
 }
 </script>
 
@@ -63,6 +73,18 @@ export default {
         border: 2px solid black;
         height: 100px;
         margin: 10px 0;
-        font-size: 13px
+        font-size: 13px;
+        i {
+            position: absolute;
+            top: 60%;
+            right: 20px;
+            font-size: 20px;
+            height: 20px;
+            cursor: pointer;
+
+        }
   }
+  .isFavourite {
+            border-left: 5px solid blue;
+        }
 </style>

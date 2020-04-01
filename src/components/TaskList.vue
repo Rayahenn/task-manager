@@ -1,19 +1,21 @@
 <template>
     <div class="board">
-        <div class="taskList" v-for="board in boards" :key="board.id">
-            <h1>{{ board.name }}</h1>
-            <draggable :dragBoard="board" group="tasks">
-                <TaskItem :board_id="board.id"/>
-            </draggable>
-            <div class="addItem">
-                <div class="add" @click="openNewItem(board.id)" :class="{ active: board.active}" v-if="!board.addingItem">+</div>
-                <div class="newItem" v-else>
-                    <input type="text" class="itemName" placeholder="Wpisz nazwe zadania...">
-                    <div class="apply">Zatwierdź</div>
-                    <div class="cancel" @click="closeNewItem(board.id)">Anuluj</div>
+        <draggable v-model="boards" class="dragList">
+            <div class="taskList" v-for="board in boards" :key="board.id">
+                <h1>{{ board.name }}</h1>
+                <draggable :dragBoard="board" group="tasks">
+                    <TaskItem :board_id="board.id"/>
+                </draggable>
+                <div class="addItem">
+                    <div class="add" @click="openNewItem(board.id)" :class="{ active: board.active}" v-if="!board.addingItem">+</div>
+                    <div class="newItem" v-else>
+                        <input type="text" class="itemName" placeholder="Wpisz nazwe zadania...">
+                        <div class="apply">Zatwierdź</div>
+                        <div class="cancel" @click="closeNewItem(board.id)">Anuluj</div>
+                    </div>
                 </div>
             </div>
-        </div>
+        </draggable>
     </div>
     
 </template>
@@ -84,6 +86,12 @@ export default {
         width: 100%;
         height: 100vh;
         justify-content: space-between;
+        .dragList {
+            display: flex;
+            width: 100%;
+            height: 100%;
+            justify-content: space-between;
+        }
     }
 
     .taskList {
@@ -92,6 +100,7 @@ export default {
     display: inline-block;
     width: 17%;
     background-color: red;
+    top: 20px;
     padding: 0 15px;
     margin: 0 0 auto;
     min-height: 200px;
