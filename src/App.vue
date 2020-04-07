@@ -1,19 +1,27 @@
 <template>
   <div id="app">
-    Hi
+    <div class="wrapper">
+      <TaskList />
+    </div>
   </div>
 </template>
 
 <script>
 
+import TaskList from '@/components/TaskList';
 
 export default {
   name: 'App',
-  components: { }
+  components: { TaskList },
+  data() {
+    return {
+  
+  }
+  }
 }
 </script>
 
-<style>
+<style lang="scss">
   * {
     box-sizing: border-box;
   }
@@ -22,6 +30,18 @@ export default {
     font-family: Arial;
     margin: 0;
     padding: 0;
+  }
+
+  .wrapper { 
+
+    position: relative;
+
+    height: 100vh;
+    width: 100%;
+    background-color: rgb(40, 40, 66);
+    
+    color: white;
+    margin: 0;
   }
 
 </style>
