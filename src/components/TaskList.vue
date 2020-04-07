@@ -1,16 +1,17 @@
 <template>
     <div class="board">
-        <draggable v-model="boards" class="dragList">
-            <div class="taskList" v-for="board in boards" :key="board.id">
+        <draggable v-model="boards" class="dragList" >
+            <div class="taskList" v-for="(board, index) in boards" :key="board.id" >
                 <h1>{{ board.name }}</h1>
-                <draggable :dragBoard="board" group="tasks">
-                    <TaskItem :board_id="board.id"/>
-                </draggable>
+                    <TaskItem :board_id="board.id" :newTask="newTask" />
                 <div class="addItem">
-                    <div class="add" @click="openNewItem(board.id)" :class="{ active: board.active}" v-if="!board.addingItem">+</div>
+                    <div class="add" @click="openNewItem(index)" :class="{ active: board.active}" v-if="!board.addingItem">+</div>
                     <div class="newItem" v-else>
-                        <input type="text" class="itemName" placeholder="Wpisz nazwe zadania...">
-                        <div class="apply">Zatwierdź</div>
+                        <input type="text" 
+                        class="itemName" 
+                        placeholder="Wpisz nazwe zadania..." 
+                        v-model="newTaskName">
+                        <div class="apply" @click="addNewTask(index)" >Zatwierdź</div>
                         <div class="cancel" @click="closeNewItem(board.id)">Anuluj</div>
                     </div>
                 </div>
@@ -29,7 +30,9 @@ export default {
     data() {
         return {
             currentBoard: 0,
-           
+            newTaskName: '',
+            newTask: {},
+            //renderComponent: true,
             boards: [
             {
                 id: 0,
@@ -70,13 +73,38 @@ export default {
         boardId.addingItem = !boardId.addingItem;
         this.$set(this.boards, id, boardId);      
         },
+
         closeNewItem(id) {
         let boardId = this.boards[id];
         boardId.active = !boardId.active;
         boardId.addingItem = !boardId.addingItem;
         this.$set(this.boards, id, boardId); 
+        },
+
+        // forceRerender() {
+        // this.renderComponent = false;
+        
+        // this.$nextTick(() => {
+        //   this.renderComponent = true;
+        // });
+        // },
+
+        addNewTask(id) {
+            this.closeNewItem(id)
+            let boardId = this.boards[id];
+            let newTask = {
+                id: null,
+                name: this.newTaskName,
+                board_id: boardId.id,
+                isEditing: false,
+                favourite: false
+            }
+            this.newTaskName = ''
+            return this.newTask = newTask
+            
         }
-    }
+    },
+
 }
 </script>
 
@@ -99,8 +127,8 @@ export default {
     position: relative;
     display: inline-block;
     width: 17%;
-    background-color: red;
-    top: 20px;
+    background-color: rgb(83, 87, 100);
+    border-radius: 5%;
     padding: 0 15px;
     margin: 0 0 auto;
     min-height: 200px;
