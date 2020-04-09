@@ -21,7 +21,7 @@
                 </div>
             <i class="fa fa-pencil-square-o edit" 
             aria-hidden="true" 
-            @click="handleEdit(task)"
+            @click="toggleEdit(task)"
             />
 
             <i class="fa fa-star-o favourite" 
@@ -88,7 +88,7 @@ export default {
         toggleFavourite(task) {
             task.favourite = !task.favourite
         },
-        handleEdit(task) {
+        toggleEdit(task) {
             task.isEditing = !task.isEditing
         },
         getDate() {

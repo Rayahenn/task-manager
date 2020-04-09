@@ -5,14 +5,14 @@
                 <h1>{{ board.name }}</h1>
                     <TaskItem :board_id="board.id" :newTask="newTask" />
                 <div class="addItem">
-                    <div class="add" @click="openNewItem(index)" :class="{ active: board.active}" v-if="!board.addingItem">+</div>
+                    <div class="add" @click="toggleNewItem(index)" :class="{ active: board.active}" v-if="!board.addingItem">+</div>
                     <div class="newItem" v-else>
                         <input type="text" 
                         class="itemName" 
                         placeholder="Wpisz nazwe zadania..." 
                         v-model="newTaskName">
                         <div class="apply" @click="addNewTask(index)" >Zatwierdź</div>
-                        <div class="cancel" @click="closeNewItem(board.id)">Anuluj</div>
+                        <div class="cancel" @click="toggleNewItem(board.id)">Anuluj</div>
                     </div>
                 </div>
             </div>
@@ -32,7 +32,6 @@ export default {
             currentBoard: 0,
             newTaskName: '',
             newTask: {},
-            //renderComponent: true,
             boards: [
             {
                 id: 0,
@@ -66,31 +65,16 @@ export default {
         addItem() {
 
         },
-        openNewItem(id) {
-            let boardId = this.boards[id];
-
+        toggleNewItem(id) {
+        let boardId = this.boards[id];
         boardId.active = !boardId.active
         boardId.addingItem = !boardId.addingItem;
         this.$set(this.boards, id, boardId);      
         },
 
-        closeNewItem(id) {
-        let boardId = this.boards[id];
-        boardId.active = !boardId.active;
-        boardId.addingItem = !boardId.addingItem;
-        this.$set(this.boards, id, boardId); 
-        },
-
-        // forceRerender() {
-        // this.renderComponent = false;
-        
-        // this.$nextTick(() => {
-        //   this.renderComponent = true;
-        // });
-        // },
 
         addNewTask(id) {
-            this.closeNewItem(id)
+            this.toggleNewItem(id)
             let boardId = this.boards[id];
             let newTask = {
                 id: null,
